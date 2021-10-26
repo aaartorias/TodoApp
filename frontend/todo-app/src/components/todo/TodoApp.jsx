@@ -1,5 +1,7 @@
 import React, {Component} from "react"
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom'
+import AuthenticationService from './AuthenticationService.js'
+// SessionStorage property allows you to access a session Storage object for the current origin
 
 // Switch - ensures at any point only one of the routes match
 class TodoApp extends Component {
@@ -51,8 +53,9 @@ class LoginComponent extends Component {
         // Hardcoding the login credentials: At present only {JohnDoe and dummy} are correct credentials
         // console.log(this.state)
         if (this.state.username==='JohnDoe' && this.state.password==='dummy') {
-            console.log(this.state)
-             this.props.history.push(`/welcome/${this.state.username}`)
+            AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+            //console.log(this.state)
+            this.props.history.push(`/welcome/${this.state.username}`)
             
         } else {
             console.log('failed')
