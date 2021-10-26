@@ -88,12 +88,17 @@ class ErrorComponent extends Component {
 
 
 class ListToDosComponent extends Component {
-
     constructor(props) {
         super(props);
         // hardcoded todo information
         this.state = {
-            todo: {id:1, description: 'Learn React'}
+            todos: [
+                {id:1, description: 'Learn React'},
+                {id:2, description: 'Learn Java'},
+                {id:3, description: 'Learn Cooking'},
+                {id:4, description: 'Learn Design Patterns'},
+                {id:5, description: 'Learn Unit Testing'}
+            ]
         }
     }
 
@@ -109,10 +114,15 @@ class ListToDosComponent extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{this.state.todo.id}</td>
-                            <td>{this.state.todo.description}</td>
-                        </tr>
+                        {
+                            this.state.todos.map(todo =>
+                                <tr>
+                                    <td>{todo.id}</td>
+                                    <td>{todo.description}</td>
+                                </tr>
+                            )
+                        }
+                        
                     </tbody>              
                 </table>
             </div>
