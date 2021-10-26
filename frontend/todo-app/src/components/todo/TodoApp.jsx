@@ -1,6 +1,8 @@
-import React, {Component} from "react"
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom'
-import AuthenticationService from './AuthenticationService.js'
+import React, {Component} from "react";
+import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import AuthenticationService from './AuthenticationService.js';
+import { withRouter } from 'react-router';
+import AuthenticatedRoute from './AuthenticatedRoute'
 // SessionStorage property allows you to access a session Storage object for the current origin
 
 // Switch - ensures at any point only one of the routes match
@@ -11,12 +13,12 @@ class TodoApp extends Component {
                 <Router>
                     <Header />
                     <Switch>    
-                        <Route path="/" exact component={LoginComponent}></Route>
-                        <Route path="/login" component={LoginComponent}></Route>
-                        <Route path="/welcome/:name" component={WelcomeComponent}></Route>
-                        <Route path="/todos" component={ListToDosComponent}></Route>
-                        <Route path="/logout" component={LogoutComponent}></Route>
-                        <Route path="" component={ErrorComponent}></Route>
+                        <Route path="/" exact component={LoginComponent}/>
+                        <Route path="/login" component={LoginComponent}/>
+                        <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent}/>
+                        <AuthenticatedRoute path="/todos" component={ListToDosComponent}/>
+                        <AuthenticatedRoute path="/logout" component={LogoutComponent}/>
+                        <Route path="" component={ErrorComponent}/>
                     </Switch>
                     <Footer/>    
                 </Router>
@@ -29,7 +31,7 @@ class LoginComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'ffff',
+            username: 'JohnDoe',
             password: '',
             loginFailed: false,
             loginSucceded: false
@@ -70,7 +72,7 @@ class LoginComponent extends Component {
         return (
             <div>
                 <h1>Login</h1>
-                <div class="container">
+                <div className="container">
                     {this.state.loginFailed && <div className="alert alert-warning">Invalid Credentials!</div>}
                     {this.state.loginSucceded && <div>Login Successful!</div>}
                     User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Enter User name"/>
@@ -125,7 +127,7 @@ class ListToDosComponent extends Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>Task</th>
+                            <th>Task Description</th>
                             <th>Completed?</th>
                             <th>Target date</th>
                         </tr>
@@ -133,7 +135,8 @@ class ListToDosComponent extends Component {
                     <tbody>
                         {
                             this.state.todos.map(todo =>
-                                <tr>
+                                // key helps react keep track of the rows - gives Warning if key is not mentioned
+                                <tr key={todo.id}>
                                     <td>{todo.description}</td>
                                     <td>{todo.done.toString()}</td>
                                     <td>{todo.targetDate.toString()}</td>
@@ -149,8 +152,12 @@ class ListToDosComponent extends Component {
     }
 }
 
+// To ensure that header menus are updated whenever the router is called
+// we need to wrap HeaderComponent with a call to withRouter.
 class Header extends Component {
     render() {
+        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+        console.log(isUserLoggedIn)
         return (
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
@@ -158,12 +165,12 @@ class Header extends Component {
                         <a className="navbar-brand" href="https://www.google.com">Google Search</a>
                     </div>
                     <ul className="navbar-nav">
-                        <li><Link  className="nav-link" to="/welcome/JohnDoe">Home</Link> </li>
-                        <li><Link  className="nav-link" to="/todos">Todos</Link></li>
+                        {isUserLoggedIn && <li><Link  className="nav-link" to="/welcome/JohnDoe">Home</Link> </li>}
+                        {isUserLoggedIn && <li><Link  className="nav-link" to="/todos">Todos</Link></li>}
                     </ul>
                     <ul className="navbar-nav navbar-collapse justify-content-end">
-                        <li><Link  className="nav-link" to="/login">Login</Link></li>
-                        <li><Link  className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Logout</Link></li>
+                        {!isUserLoggedIn && <li><Link  className="nav-link" to="/login">Login</Link></li>}
+                        {isUserLoggedIn && <li><Link  className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Logout</Link></li>}
                     </ul>
 
                 </nav>
