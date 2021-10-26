@@ -14,26 +14,26 @@ class LoginComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: '',
+            username: 'ffff',
             password: ''
         };
     }
 
-    handleUserIdChange = (event) => {
-        //console.log(event.target.value);
-        this.setState({userName: event.target.value});
-    }
+    handleChange = (event) => {
+        // console.log(this.state);
+        this.setState(
+            {
+                [event.target.name]: event.target.value
+            }
+        )
 
-    handlePasswordChange = (event) => {
-        //console.log(event.target.value);
-        this.setState({password: event.target.value});
     }
 
     render() {
         return (
             <div>
-                User Name: <input type="text" name="username" value={this.state.userName} onChange={this.handleUserIdChange} placeholder="Enter User name"/>
-                Password: <input type="password" name="password"  value={this.state.password} onChange={this.handlePasswordChange} placeholder="Enter Password"/>
+                User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Enter User name"/>
+                Password: <input type="password" name="password"  value={this.state.password} onChange={this.handleChange} placeholder="Enter Password"/>
                 <button>Login</button>
             </div>
         )
