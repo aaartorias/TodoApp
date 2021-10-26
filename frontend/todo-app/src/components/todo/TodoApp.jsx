@@ -1,10 +1,15 @@
 import React, {Component} from "react"
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 class TodoApp extends Component {
     render () {
         return (
             <div className="TodoApp">
-                <LoginComponent />
+                <Router>
+                    <Route path="/" exact component={LoginComponent}></Route>
+                    <Route path="/login" component={LoginComponent}></Route>
+                    <Route path="/welcome" component={WelcomeComponent}></Route>
+                </Router>
             </div>
         )
     }
@@ -51,8 +56,8 @@ class LoginComponent extends Component {
     render() {
         return (
             <div>
-                <ShowLoginFailed loginFailed = {this.state.loginFailed}/>
-                <ShowLoginSucceded loginSucceded = {this.state.loginSucceded} />
+                {this.state.loginFailed && <div>Invalid Credentials!</div>}
+                {this.state.loginSucceded && <div>Login Successful!</div>}
                 User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Enter User name"/>
                 Password: <input type="password" name="password"  value={this.state.password} onChange={this.handleChange} placeholder="Enter Password"/>
                 <button onClick={this.loginClicked}>Login</button>
@@ -61,18 +66,10 @@ class LoginComponent extends Component {
     }
 }
 
-function ShowLoginFailed(props) {
-    if (props.loginFailed) {
-        return <div>Invalid Credentials!</div>
+class WelcomeComponent extends Component { 
+    render() {
+        return <div>Welcome to My App!</div>
     }
-    return null;
-}
-
-function ShowLoginSucceded(props) {
-    if (props.loginSucceded) {
-        return <div>Login Successful!</div>
-    }
-    return null;
 }
 
 export default TodoApp;
