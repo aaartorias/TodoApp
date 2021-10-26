@@ -1,14 +1,18 @@
 import React, {Component} from "react"
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
+// Switch - ensures at any point only one of the routes match
 class TodoApp extends Component {
     render () {
         return (
             <div className="TodoApp">
                 <Router>
-                    <Route path="/" exact component={LoginComponent}></Route>
-                    <Route path="/login" component={LoginComponent}></Route>
-                    <Route path="/welcome" component={WelcomeComponent}></Route>
+                    <Switch>    
+                        <Route path="/" exact component={LoginComponent}></Route>
+                        <Route path="/login" component={LoginComponent}></Route>
+                        <Route path="/welcome/:name" component={WelcomeComponent}></Route>
+                        <Route path="" component={ErrorComponent}></Route>
+                    </Switch>    
                 </Router>
             </div>
         )
@@ -42,8 +46,11 @@ class LoginComponent extends Component {
         // console.log(this.state)
         if (this.state.username==='JohnDoe' && this.state.password==='dummy') {
             console.log(this.state)
-            this.setState({loginSucceded: true})
-            this.setState({loginFailed: false})
+            // history - lets us manage session history anythwere JS runs
+            // history - manage history stack, navigate, confirm navigation and persist state between sessions
+            this.props.history.push(`/welcome/${this.state.username}`)
+            // this.setState({loginSucceded: true})
+            // this.setState({loginFailed: false})
         } else {
             console.log('failed')
             this.setState({loginFailed: true})
@@ -68,7 +75,13 @@ class LoginComponent extends Component {
 
 class WelcomeComponent extends Component { 
     render() {
-        return <div>Welcome to My App!</div>
+        return <div>Welcome {this.props.match.params.name}</div>
+    }
+}
+
+class ErrorComponent extends Component {
+    render() {
+        return <div>Wrong Route. Enter correct route information to use the ToDo app</div>
     }
 }
 
