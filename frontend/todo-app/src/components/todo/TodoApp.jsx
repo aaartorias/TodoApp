@@ -44,7 +44,7 @@ class LoginComponent extends Component {
         );
 
     }
-    
+
     // history - lets us manage session history anythwere JS runs
     // history - manage history stack, navigate, confirm navigation and persist state between sessions
     loginClicked = () => {
@@ -66,11 +66,14 @@ class LoginComponent extends Component {
     render() {
         return (
             <div>
-                {this.state.loginFailed && <div>Invalid Credentials!</div>}
-                {this.state.loginSucceded && <div>Login Successful!</div>}
-                User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Enter User name"/>
-                Password: <input type="password" name="password"  value={this.state.password} onChange={this.handleChange} placeholder="Enter Password"/>
-                <button onClick={this.loginClicked}>Login</button>
+                <h1>Login</h1>
+                <div class="container">
+                    {this.state.loginFailed && <div className="alert alert-warning">Invalid Credentials!</div>}
+                    {this.state.loginSucceded && <div>Login Successful!</div>}
+                    User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Enter User name"/>
+                    Password: <input type="password" name="password"  value={this.state.password} onChange={this.handleChange} placeholder="Enter Password"/>
+                    <button className="btn btn-success" onClick={this.loginClicked}>Login</button>
+                </div>
             </div>
         )
     }
@@ -78,7 +81,14 @@ class LoginComponent extends Component {
 
 class WelcomeComponent extends Component { 
     render() {
-        return <div>Welcome {this.props.match.params.name}. Please click <Link to='/todos'> here</Link> </div>
+        return(
+            <div>
+                <h1>Welcome!</h1>
+                <div className="container">
+                    Welcome {this.props.match.params.name}. You can manage your todo list <Link to='/todos'>here</Link>
+                </div>
+            </div>
+        ) 
     }
 }
 
@@ -108,11 +118,11 @@ class ListToDosComponent extends Component {
         return (
             <div>
                 <h1>List Todo tasks</h1>
-                <table>
+                <div className="container">
+                <table className="table">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Description</th>
+                            <th>Task</th>
                             <th>Completed?</th>
                             <th>Target date</th>
                         </tr>
@@ -121,7 +131,6 @@ class ListToDosComponent extends Component {
                         {
                             this.state.todos.map(todo =>
                                 <tr>
-                                    <td>{todo.id}</td>
                                     <td>{todo.description}</td>
                                     <td>{todo.done.toString()}</td>
                                     <td>{todo.targetDate.toString()}</td>
@@ -131,6 +140,7 @@ class ListToDosComponent extends Component {
                         
                     </tbody>              
                 </table>
+                </div>
             </div>
         )
     }
@@ -142,7 +152,7 @@ class Header extends Component {
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                     <div>
-                        <a className="navbar-brand" href="www.google.com">Google Search</a>
+                        <a className="navbar-brand" href="https://www.google.com">Google Search</a>
                     </div>
                     <ul className="navbar-nav">
                         <li><Link  className="nav-link" to="/welcome/JohnDoe">Home</Link> </li>
