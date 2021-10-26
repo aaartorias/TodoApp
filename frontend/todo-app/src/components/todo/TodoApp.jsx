@@ -11,6 +11,7 @@ class TodoApp extends Component {
                         <Route path="/" exact component={LoginComponent}></Route>
                         <Route path="/login" component={LoginComponent}></Route>
                         <Route path="/welcome/:name" component={WelcomeComponent}></Route>
+                        <Route path="/todos" component={ListToDosComponent}></Route>
                         <Route path="" component={ErrorComponent}></Route>
                     </Switch>    
                 </Router>
@@ -82,6 +83,40 @@ class WelcomeComponent extends Component {
 class ErrorComponent extends Component {
     render() {
         return <div>Wrong Route. Enter correct route information to use the ToDo app</div>
+    }
+}
+
+
+class ListToDosComponent extends Component {
+
+    constructor(props) {
+        super(props);
+        // hardcoded todo information
+        this.state = {
+            todo: {id:1, description: 'Learn React'}
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>List Todo tasks</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{this.state.todo.id}</td>
+                            <td>{this.state.todo.description}</td>
+                        </tr>
+                    </tbody>              
+                </table>
+            </div>
+        )
     }
 }
 
