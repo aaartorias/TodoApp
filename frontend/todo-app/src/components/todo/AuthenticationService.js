@@ -1,4 +1,6 @@
-// register that a user has logged in  using sessionStorage.setItem()
+// SessionStorage property allows you to access a session Storage object for the current origin
+
+// register that a user has logged in using sessionStorage.setItem()
 // data stored in sessionStorage gets cleared when the page session ends
 // data in localStorage has no expiration time
 class AuthenticationService {
