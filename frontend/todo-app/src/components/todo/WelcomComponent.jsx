@@ -7,7 +7,10 @@ class WelcomeComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            welcomeMessage : ""
+            welcomeMessage : "",
+            WelcomMessageFrombeans: "",
+            WelcomMessageFromParameterizedBeans: "",
+            ErrorMessage: ""
         }
     }
 
@@ -18,12 +21,37 @@ class WelcomeComponent extends Component {
                 <div className="container">
                     Welcome {this.props.match.params.name}. You can manage your todo list <Link to='/todos'>here</Link>
                 </div>
+                <hr /> 
                 <div className="container">
                     Click here to get a customized welcome message 
                     <button  onClick={this.retrieveWelcomeMessage} className="btn btn-success">Get Welcome Message</button>
                 </div>
                 <div className="container">
                     {this.state.welcomeMessage}
+                </div>
+                <hr />
+                <div className="container">
+                    Click here to get a customized welcome message 
+                    <button  onClick={this.retrieveWelcomeMessageFromBeans} className="btn btn-success">Get Welcome Message</button>
+                </div> 
+                <div className="container">
+                    {this.state.WelcomMessageFrombeans}
+                </div>
+                <hr />
+                <div className="container">
+                    Click here to get a customized welcome message
+                    <button  onClick={this.retrieveWelcomMessageFromParameterizedBeans} className="btn btn-success">Get Welcome Message</button>
+                </div> 
+                <div className="container">
+                    {this.state.WelcomMessageFromParameterizedBeans}
+                </div>
+                <hr />
+                <div className="container">
+                    Click here to get an error message
+                    <button  onClick={this.retrieveErrorMessage} className="btn btn-danger">Get Error Message</button>
+                </div> 
+                <div className="container">
+                    {this.state.ErrorMessage}
                 </div>
             </div>
         ) 
@@ -36,9 +64,46 @@ class WelcomeComponent extends Component {
         .catch(error => console.log('no response found'))
     }
 
+    retrieveWelcomeMessageFromBeans = () => {
+        console.log("Retrieve welcome message from beans called");
+        HelloWorldService.executeHelloWorldBeanServie()
+        .then(response => this.handleSuccessMessageFromBean(response))
+        .catch(error => console.log('no response found'))
+    }
+
     handleSuccessMessage = (response) => {
         this.setState ({welcomeMessage:response.data})
     }
+
+    handleSuccessMessageFromBean = (response) => {
+        console.log(response);
+        this.setState({WelcomMessageFrombeans: response.data.message});
+    }
+
+    retrieveWelcomMessageFromParameterizedBeans= () => {
+        console.log("Retrieve welcome message from beans called");
+        HelloWorldService.executeHelloWorldBeanServieWithPathVariableService(this.props.match.params.name)
+        .then (response => this.handleSuccessMessageFromParameterizedBean(response))
+        .catch(error => console.log('no response found'))
+    }
+
+    handleSuccessMessageFromParameterizedBean = (response) => {
+        console.log(response);
+        this.setState({WelcomMessageFromParameterizedBeans: response.data.message});
+    }
+/*
+    retrieveErrorMessage = (error) => {
+        console.log(error);
+        HelloWorldService.executeGetErrorFromBeaneService()
+        .then(response => console.log("weird, I wasn't expecting a respose here"))
+        .catch(error => this.handleErrorMessage(error));
+    }
+
+    handleErrorMessage = (error) => {
+        console.log(error);
+        this.setState({ErrorMessage: error.response.data.message});
+    }*/
+    //executeHelloWorldBeanServie
 }
 
 export default WelcomeComponent;
