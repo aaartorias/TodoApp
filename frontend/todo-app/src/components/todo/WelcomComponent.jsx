@@ -70,6 +70,20 @@ class WelcomeComponent extends Component {
         .then(response => this.handleSuccessMessageFromBean(response))
         .catch(error => console.log('no response found'))
     }
+    
+    retrieveWelcomMessageFromParameterizedBeans= () => {
+        console.log("Retrieve welcome message from beans called");
+        HelloWorldService.executeHelloWorldBeanServieWithPathVariableService(this.props.match.params.name)
+        .then (response => this.handleSuccessMessageFromParameterizedBean(response))
+        .catch(error => console.log('no response found'))
+    }
+
+    retrieveErrorMessage = (error) => {
+        console.log(error);
+        HelloWorldService.executeGetErrorFromBeaneService()
+        .then(response => console.log("weird, I wasn't expecting a respose here"))
+        .catch(error => this.handleErrorMessage(error));
+    }
 
     handleSuccessMessage = (response) => {
         this.setState ({welcomeMessage:response.data})
@@ -80,30 +94,15 @@ class WelcomeComponent extends Component {
         this.setState({WelcomMessageFrombeans: response.data.message});
     }
 
-    retrieveWelcomMessageFromParameterizedBeans= () => {
-        console.log("Retrieve welcome message from beans called");
-        HelloWorldService.executeHelloWorldBeanServieWithPathVariableService(this.props.match.params.name)
-        .then (response => this.handleSuccessMessageFromParameterizedBean(response))
-        .catch(error => console.log('no response found'))
-    }
-
     handleSuccessMessageFromParameterizedBean = (response) => {
         console.log(response);
         this.setState({WelcomMessageFromParameterizedBeans: response.data.message});
     }
-/*
-    retrieveErrorMessage = (error) => {
-        console.log(error);
-        HelloWorldService.executeGetErrorFromBeaneService()
-        .then(response => console.log("weird, I wasn't expecting a respose here"))
-        .catch(error => this.handleErrorMessage(error));
-    }
 
     handleErrorMessage = (error) => {
-        console.log(error);
+        console.log(error.response);
         this.setState({ErrorMessage: error.response.data.message});
-    }*/
-    //executeHelloWorldBeanServie
+    }
 }
 
 export default WelcomeComponent;

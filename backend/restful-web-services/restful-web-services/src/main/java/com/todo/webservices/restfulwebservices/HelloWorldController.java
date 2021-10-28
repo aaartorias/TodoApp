@@ -30,6 +30,9 @@ public class HelloWorldController {
 	
 	@GetMapping(path="/hello-world-bean/{name}")
 	public HelloWorldBean helloworlWithPathVariable(@PathVariable String name) {
+		if (name.equals("sendErrorData")) {
+			throw new RuntimeException("Oops!!! Something went wrong.");
+		}
 		return new HelloWorldBean(String.format("Hello Friend, %s",name));
 	}
 }

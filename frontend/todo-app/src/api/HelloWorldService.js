@@ -18,7 +18,7 @@ class HelloWorldService {
 
     executeGetErrorFromBeaneService(name) {
         console.log('Executed service: hello-world-bean');
-        return axios.get(`http://localhost:8080/hello-world-error/showError`)
+        return axios.get(`http://localhost:8080/hello-world-bean/sendErrorData`)
     }
 }
 
