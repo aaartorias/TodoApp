@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import AuthenticationService from './AuthenticationService.js';
 import { withRouter } from 'react-router';
-import AuthenticatedRoute from './AuthenticatedRoute'
 
 // To ensure that header menus are updated whenever the router is called
 // we need to wrap HeaderComponent with a call to withRouter.

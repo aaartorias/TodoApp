@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-// import FirstComponent from './components/learning-examples/firstComponent';
-// import SecondComponent from './components/learning-examples/secondComponent'; 
-// import {ThirdComponent} from './components/learning-examples/thirdComponent'; // for non-default exports we need to use curly braces
 import TodoApp from './components/todo/TodoApp';
 import './bootstrap.css';
 
