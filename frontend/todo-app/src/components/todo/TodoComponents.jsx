@@ -18,10 +18,10 @@ class TodoComponent extends Component {
 
     componentDidMount = () => {
         let username = AuthenticationService.getLoggedInUserName()
-        let id = this.state.id
-        TodoDataService.retrieveTodo(username,id)
+        TodoDataService.retrieveTodo(username,this.state.id)
         .then( response => {
             this.setState({
+                id: this.state.id,
                 description: response.data.description,
                 targetDate: moment(response.data.targetDate).format('YYYY-MM-DD')
             })
@@ -44,19 +44,45 @@ class TodoComponent extends Component {
         if (!moment(values.targetDate).isValid()) {
             errors.targetDate = "Enter a valid Target Date"
             console.log("Invalid date")
-        } else {
-            console.log("valid date")
-        }
-
-        console.log("values")
+        } 
+        
         return errors;
     }
 
     onSubmit = (values) => {
-        console.log("here")
-        console.log(values)
         let username = AuthenticationService.getLoggedInUserName();
+        let todo =  {
+            name: username,
+            id: this.state.id,
+            description: values.description,
+            targetDate: values.targetDate
+        }
 
+        if (this.state.id === -1) {
+            this.createTodo(username,todo)
+        } else {
+            this.updateTodo(username, todo)
+        }
+    }
+
+    createTodo = (username, todo) => {
+        TodoDataService.createTodo(username,todo)
+        .then(
+            this.props.history.push(`/todos`)
+        )
+        .catch(
+            error => console.log(error)
+        )
+    }
+
+    updateTodo = (username, todo) => {
+        TodoDataService.updateTodo(username, this.state.id, todo)
+            .then(
+                this.props.history.push(`/todos`)
+            )
+            .catch(
+                error => console.log(error)
+            )
     }
 
     render() {

@@ -14,7 +14,6 @@ class LoginComponent extends Component {
 
     // Generic handler for input events of Login 
     handleChange = (event) => {
-        // console.log(this.state);
         this.setState(
             {
                 [event.target.name]: event.target.value
@@ -27,10 +26,8 @@ class LoginComponent extends Component {
     // history - manage history stack, navigate, confirm navigation and persist state between sessions
     loginClicked = () => {
         // Hardcoding the login credentials: At present only {JohnDoe and dummy} are correct credentials
-        // console.log(this.state)
         if (this.state.username==='JohnDoe' && this.state.password==='dummy') {
             AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
-            //console.log(this.state)
             this.props.history.push(`/welcome/${this.state.username}`)
             
         } else {

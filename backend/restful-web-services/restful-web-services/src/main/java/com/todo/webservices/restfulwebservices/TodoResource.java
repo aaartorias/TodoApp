@@ -59,6 +59,7 @@ public class TodoResource {
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(createdTodo.getId()).toUri();
+		
 		return ResponseEntity.created(uri).build();		
 	}
 }
