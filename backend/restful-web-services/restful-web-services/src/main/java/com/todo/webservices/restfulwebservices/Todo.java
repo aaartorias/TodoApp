@@ -9,8 +9,6 @@ public class Todo {
 	private String description;
 	private Date targetDate;
 	private boolean isDone;
-	
-	//protected Todo() {}
 
 	public Todo(long id, String name, String description, 
 			Date targetDate, boolean isDone) {
