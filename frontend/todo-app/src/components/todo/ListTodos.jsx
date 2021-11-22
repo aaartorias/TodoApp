@@ -38,7 +38,6 @@ class ListToDosComponent extends Component {
 
     updateTodo = (id) => {
         let username = AuthenticationService.getLoggedInUserName()
-        console.log(`Update todo ${id}`)
         this.props.history.push(`/todos/${id}`)
     }
 
