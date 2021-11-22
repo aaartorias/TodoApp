@@ -118,7 +118,6 @@ class TodoComponent extends Component {
                     }
                 </Formik>
             </div>
-            Update Todo {this.props.match.params.id}
         </div>
         )
     }

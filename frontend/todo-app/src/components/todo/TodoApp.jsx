@@ -13,7 +13,6 @@ import TodoComponent from "./TodoComponents";
 // Switch - ensures at any point only one of the routes match
 class TodoApp extends Component {
     render () {
-    console.log("Here")
         return (
             <div className="TodoApp">
                 <Router>
