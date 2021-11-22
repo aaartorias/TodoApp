@@ -78,8 +78,4 @@ public class Todo {
 		return Objects.equals(description, other.description) && id == other.id && isDone == other.isDone
 				&& Objects.equals(name, other.name) && Objects.equals(targetDate, other.targetDate);
 	}
-	
-	
-	
-
 }

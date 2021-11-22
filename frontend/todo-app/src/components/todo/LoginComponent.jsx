@@ -25,16 +25,18 @@ class LoginComponent extends Component {
     // history - lets us manage session history anythwere JS runs
     // history - manage history stack, navigate, confirm navigation and persist state between sessions
     loginClicked = () => {
-        // Hardcoding the login credentials: At present only {JohnDoe and dummy} are correct credentials
-        if (this.state.username==='JohnDoe' && this.state.password==='dummy') {
-            AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
-            this.props.history.push(`/welcome/${this.state.username}`)
-            
-        } else {
-            console.log('failed')
-            this.setState({loginFailed: true})
-            this.setState({loginSucceded: false})
-        }
+        AuthenticationService.executeBasicAuthenticationService(this.state.username, this.state.password)
+            .then(() => {
+                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+                this.props.history.push(`/welcome/${this.state.username}`)
+                console.log("AUthenicated")
+            })
+            .catch(() => {
+                    console.log('Login failed')
+                    this.setState({loginFailed: true})
+                    this.setState({loginSucceded: false})
+                }
+            )
     }
 
     render() {
