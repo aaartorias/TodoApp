@@ -1,5 +1,4 @@
 package com.todo.webservices.restfulwebservices.jwt.resource;
-
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +75,7 @@ public class JwtAuthenticationRestController {
   private void authenticate(String username, String password) {
     Objects.requireNonNull(username);
     Objects.requireNonNull(password);
+    System.out.println("No idea");
 
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -86,4 +86,3 @@ public class JwtAuthenticationRestController {
     }
   }
 }
-
