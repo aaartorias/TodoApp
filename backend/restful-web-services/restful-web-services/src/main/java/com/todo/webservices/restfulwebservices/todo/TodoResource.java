@@ -1,4 +1,4 @@
-package com.todo.webservices.restfulwebservices;
+package com.todo.webservices.restfulwebservices.todo;
 
 import java.net.URI;
 import java.util.List;
